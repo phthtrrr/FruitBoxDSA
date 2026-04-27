@@ -1,16 +1,12 @@
-"""
-FRUIT BOX DSA - ZEN PUZZLE EDITION
-==================================
 
-Chương trình này mô phỏng trò chơi giải đố Fruit Box bằng thư viện Pygame, 
-kết hợp áp dụng các Cấu trúc Dữ liệu và Giải thuật (DSA) để tối ưu hóa.
+FRUIT BOX DSA
 
 Người chơi sẽ quét chuột tạo thành các vùng chọn hình chữ nhật. Nếu tổng
 các phần tử bên trong vùng chọn đúng bằng 10, các quả táo sẽ bị triệt tiêu
 và người chơi sẽ được cộng điểm.
 
 --------------------------------------------------
-LUẬT CHƠI (GIAI ĐOẠN TUẦN 1 & 2)
+(GIAI ĐOẠN TUẦN 1 & 2)
 --------------------------------------------------
 - Nhấn giữ chuột trái & Kéo: 
     Tạo một khung chọn (Bounding Box) màu xanh dương bao quanh các quả táo.
