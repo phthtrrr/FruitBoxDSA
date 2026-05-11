@@ -3,6 +3,18 @@ import random
 import sys
 
 
+"""Phân tích và thiết kế game giải đố Fruit Box.
+
+Tựa game giải đố trí tuệ kết hợp yếu tố Time Attack. Người chơi tương tác 
+trên một ma trận lưới 10x15 bằng cách kéo chuột khoanh vùng các quả táo sao 
+cho tổng các giá trị trong vùng bằng đúng 10.
+
+Các kỹ thuật Cấu trúc Dữ liệu & Giải thuật (DSA) áp dụng:
+  * Tuật toán Sinh mảng lai  (Hybrid Generation) nhằm cchống bí nước.
+  * Mảng cộng dồn 2 chiều (2D Prefix Sum) đệm biên giúp tăng tốc giảm thời gian truy vấn còn O(1).
+  * Giải thuật Tìm kiếm Cắt tỉa (Pruning Search) cho hệ thống gợi ý.
+"""
+
 # CẤU HÌNH CƠ BẢN 
 WIDTH, HEIGHT = 850, 650
 CELL_SIZE = 40
@@ -437,6 +449,11 @@ class FruitBoxDSA:
 
     # HÀM VÒNG LẶP CHẠY CỦA GAME
     def run(self):
+        """Bắt đầu vòng lặp điều khiển chính của ứng dụng game.
+    
+    Cập nhật nhịp đếm thời gian, lắng nghe sự kiện ngoại vi và định 
+    tuyến render đồ họa theo luồng Máy trạng thái hữu hạn FSM.
+    """
         running = True
 
         while running:
