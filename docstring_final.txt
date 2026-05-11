@@ -1,0 +1,140 @@
+MODULE: fruitbox.py
+--------------------------------------------------------------------------------
+"""Phân tích và thiết kế game giải đố Fruit Box.
+
+Tựa game giải đố trí tuệ kết hợp yếu tố Time Attack. Người chơi tương tác 
+trên một ma trận lưới 10x15 bằng cách kéo chuột khoanh vùng các quả táo sao 
+cho tổng các giá trị trong vùng bằng đúng 10.
+
+Các kỹ thuật Cấu trúc Dữ liệu & Giải thuật (DSA) áp dụng:
+  * Tuật toán Sinh mảng lai  (Hybrid Generation) nhằm cchống bí nước.
+  * Mảng cộng dồn 2 chiều (2D Prefix Sum) đệm biên giúp tăng tốc giảm thời gian truy vấn còn O(1).
+  * Giải thuật Tìm kiếm Cắt tỉa (Pruning Search) cho hệ thống gợi ý.
+"""
+
+
+================================================================================
+CLASS: FruitBoxDSA
+--------------------------------------------------------------------------------
+"""Lớp điều khiển trung tâm quản lý vòng đời ứng dụng và trạng thái.
+
+Hệ thống quản lý toàn bộ cấu trúc dữ liệu ma trận, luồng sự kiện Pygame 
+và định tuyến đồ họa theo trạng thái.
+"""
+
+
+Danh sách Phương thức (Methods):
+--------------------------------------------------------------------------------
+
+def __init__(self):
+    """Khởi tạo Engine đồ họa, bộ nhớ đệm và các biến trạng thái FSM."""
+
+def reset_game(self):
+    """Khởi tạo lại toàn bộ dữ liệu bộ nhớ để bắt đầu ván chơi mới.
+    
+    Cấp phát lại ma trận vật lý, tái cấu trúc bảng Prefix Sum và neo lại 
+    các mốc thời gian theo dõi bế tắc của hệ thống gợi ý.
+    """
+
+def generate_grid(self):
+    """
+        Hàm Sinh bản đồ 10x15 táo kết hợp 3 tầng thuật toán để cân bằng game và giúp giảm bí nước cục bộ ban đầu:
+        1. Gieo cặp nghiệm cha bị ngăn cách bởi nghiệm con.
+        2. Gom cụm các ô gần nhau theo khoảng cách Manhattan.
+        3. Rejection Sampling: Đổ nhiễu và lọc để tổng ma trận chia hết cho 10.
+        
+        Returns:
+            list: Lưới Ma trận 2 chiều 10x15 chứa các giá trị từ 1 đến 9.
+        """
+
+def build_prefix_sum(self):
+    """
+        Xây dựng mảng cộng dồn 2 chiều
+        Độ phức tạp: O(ROWS * COLS).
+        Áp dụng thêm kỹ thuật đặt lính canh ở vùng ranh để tránh bị lỗi tràn mảng (Out of bounds) 
+        và giúp giảm thiểu sử dụng nhiều câu lệnh if/else rắc rối.
+        """
+
+def query_sum(self, r1, c1, r2, c2):
+    """Truy vấn tổng các phần tử trong vùng hình chữ nhật từ r1,c1 đến r2,c2.
+    
+    Sử dụng nguyên lý Bù trừ trên mảng cộng dồn. 
+    Độ phức tạp thời gian đạt O(1) tuyệt đối.
+
+    Args:
+        r1, c1 (int): Tọa độ hàng, cột của góc trên bên trái.
+        r2, c2 (int): Tọa độ hàng, cột của góc dưới bên phải.
+
+    Returns:
+        int: Tổng giá trị các quả táo nằm trong vùng chọn.
+    """
+
+def get_hint(self):
+    """
+        Quét tìm vùng Bounding Box tối ưu có tổng bằng 10 trên lưới.
+        Áp dụng kỹ thuật tìm kiếm Cắt tỉa nhánh (Pruning Search): Dừng mở rộng vùng quét
+        ngay khi tổng vượt quá 10, loại bỏ không gian tìm kiếm hoang phí.
+        
+        Returns:
+            tuple hoặc None: Bộ tọa độ (r1, c1, r2, c2) nếu tìm thấy nghiệm,
+                             ngược lại trả về None (khi không còn nước đi).
+        """
+
+def get_cell_from_mouse(self, pos):
+    """Ánh xạ tọa độ điểm ảnh Pixel sang chỉ số ma trận Lưới.
+    
+    Áp dụng kỹ thuật Kẹp biên đảm bảo chỉ số luôn hợp lệ.
+
+    Args:
+        pos (tuple): Tọa độ (x, y) của con trỏ chuột trên màn hình.
+
+    Returns:
+        tuple: Chỉ số hàng và cột (row, col) tương ứng trên lưới 10x15.
+    """
+
+def check_selection(self):
+    """
+        Xử lý việc triệt tiêu táo mỗi khi người chơi nhả chuột.
+        Đồng bộ lại dữ liệu: Cập nhật điểm số, gán ma trận về 0, tái cấu trúc 
+        Prefix Sum và kiểm tra cơ chế kết thúc game.
+        """
+
+def draw_start_screen(self):
+    """Render giao diện Menu Khởi đầu kèm hình ảnh trang trí trực quan."""
+
+def draw_tutorial_screen(self):
+    """Render lớp phủ Overlay minh họa quy tắc và luật chơi game."""
+
+def draw_gameover_screen(self):
+    """Render màn hình Tổng kết điểm số khi ván chơi kết thúc."""
+
+def draw_grid(self):
+    """Render các đường kẻ lưới caro và trạng thái hiện tại của các quả táo."""
+
+def draw_selection(self):
+    """Render lớp phủ Bounding Box kéo chuột và Khung vàng AI Gợi ý."""
+
+def run(self):
+    """Bắt đầu vòng lặp điều khiển chính của ứng dụng game.
+    Cập nhật bộ đếm thời gian, xử lý sự kiện ngoại vi và render đồ họa theo luồng từng trạng thái.
+    """
+
+================================================================================
+CẤU HÌNH & HẰNG SỐ (CONSTANTS)
+--------------------------------------------------------------------------------
+BLACK         = (0, 0, 0)
+CELL_SIZE     = 40
+COLS          = 15
+DARK_GRAY     = (100, 100, 100)
+DARK_RED      = (180, 30, 30)
+GOLD          = (255, 215, 0)
+GRAY          = (220, 220, 220)
+GREEN         = (50, 200, 50)
+GRID_OFFSET_X = 120
+GRID_OFFSET_Y = 100
+HEIGHT        = 650
+LIGHT_BLUE    = (173, 216, 230)
+RED           = (230, 50, 50)
+ROWS          = 10
+WHITE         = (255, 255, 255)
+WIDTH         = 850
